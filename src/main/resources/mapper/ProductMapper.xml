@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.ProductMapper" >
+<!-- 添加商品图片 -->
+    <insert id="save" parameterType="entity.Product" >
+        insert into product(pimage) values (#{pimage})    
+    </insert> 
+    
+    <!-- 查询商品-->
+    <select id="list" resultType="entity.Product">
+        select * from product
+    </select> 
+</mapper>
