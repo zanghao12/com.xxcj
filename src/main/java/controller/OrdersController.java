@@ -39,7 +39,7 @@ public class OrdersController {
 	}
 	//
 	@RequestMapping("ordersdi.do")
-	public int toOrdersdi(Movie movie,User user) {
+	public int toOrdersdi() {
 		
 		return 1;
 	}

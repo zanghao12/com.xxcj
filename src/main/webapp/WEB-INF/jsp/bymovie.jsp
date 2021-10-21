@@ -142,10 +142,9 @@ $(document).ready(function(){
 				  },
 				  success:function(result){
 				        if(result==1){
-				        	alert("此用户已被注册");
-				        	$("#name").val("");
+				        	alert("订单成功");
 				        }else{
-				        	$("#ts").text("该用户可以使用");
+                          alert("订单失败");
 				        }
 					},
 					failed:function(result){}

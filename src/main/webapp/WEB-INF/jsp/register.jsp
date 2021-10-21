@@ -60,7 +60,7 @@
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
-             <span form-control id="ts"></span>
+             <span form-control id="tsf"></span>
             </div>
           </div>
           <!-- /.col -->
@@ -82,7 +82,7 @@
         </a>
       </div>
 -->
-      <a href="login.jsp" class="text-center">我已经有账号</a>
+      <a href="/toLogin.do" class="text-center">我已经有账号</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->

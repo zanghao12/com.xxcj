@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,7 +33,6 @@ public class ProductController {
     
     @RequestMapping("/addProduct.do")
     public String fileUpload(MultipartFile file,Product product, ModelMap map) throws IOException {
-
         /**
          * 上传图片
          */
@@ -42,6 +42,7 @@ public class ProductController {
         String originalFilename = file.getOriginalFilename();
         //新的文件名字，使用uuid随机生成数+原始图片名字，这样不会重复
         String newFileName = UUID.randomUUID()+originalFilename;
+        newFileName = URLEncoder.encode(newFileName,"UTF-8");
         //封装上传文件位置的全路径，就是硬盘路径+文件名
         File targetFile = new File(filePath,newFileName); 
         //把本地文件上传到已经封装好的文件位置的全路径就是上面的targetFile

@@ -3,7 +3,7 @@
 <mapper namespace="mapper.ProductMapper" >
 <!-- 添加商品图片 -->
     <insert id="save" parameterType="entity.Product" >
-        insert into product(pimage) values (#{pimage})    
+        insert into product(pimage) values (#{pimage})
     </insert> 
     
     <!-- 查询商品-->

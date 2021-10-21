@@ -125,6 +125,7 @@
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th>图片</th>
                                 <th>电影名</th>
                                 <th>电影介绍</th>
                                 <th>主演</th>
@@ -138,6 +139,11 @@
                             <c:forEach items="${movies}" var="movie" varStatus="status">
                                 <c:if test="${status.index % 2 == 0 }">
                                     <tr>
+                                        <td width="10%" height="30" align="center" bgcolor="#FFF5D7">
+                                            <c:if test="${movie.image !=null }">
+                                                <img id="image" style="width: 80%"  src="/image/${movie.image }">
+                                            </c:if>
+                                        </td>
                                         <td width="10%" height="30" align="center" bgcolor="#FFF5D7"><span class="txt">${movie.mName}</span></td>
                                         <td width="10%" height="30" align="center" bgcolor="#FFF5D7"><span class="txt">${movie.description}</span></td>
                                         <td width="10%" height="30" align="center" bgcolor="#FFF5D7"><span class="txt">${movie.actor}</span></td>
@@ -149,6 +155,11 @@
                                 </c:if>
                                 <c:if test="${status.index % 2 != 0 }">
                                     <tr>
+                                        <td width="10%" height="30" align="center" bgcolor="#FFF5D7">
+                                            <c:if test="${movie.image !=null }">
+                                                <img id="image" style="width: 80%"  src="/image/${movie.image }">
+                                            </c:if>
+                                        </td>
                                         <td width="10%" height="30" align="center" bgcolor="#FFF5D7"><span class="txt">${movie.mName}</span></td>
                                         <td width="10%" height="30" align="center" bgcolor="#FFF5D7"><span class="txt">${movie.description}</span></td>
                                         <td width="10%" height="30" align="center" bgcolor="#FFF5D7"><span class="txt">${movie.actor}</span></td>
@@ -172,7 +183,19 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
-<div class="dataTables_paginate paging_simple_numbers" id="example2_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li></ul></div>
+<div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+    <ul class="pagination">
+            <li class="paginate_button page-item active  <c:if test="${pageInfo.pageNum==1}">disabled</c:if> ">
+                <a aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link" href="${pageContext.request.contextPath}/movielist.do?page=1" >&laquo;</a>
+            </li>
+            <c:forEach begin="1" end="${pageInfo.pages}" step="1" var="pageNo">
+                <li class="paginate_button page-item <c:if test="${pageInfo.pageNum==pageNo}">active</c:if>">
+                    <a aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link" href="${pageContext.request.contextPath}/movielist.do?page=${pageNo}">${pageNo}</a></li>
+            </c:forEach>
+            <li class="paginate_button page-item  <c:if test="${pageInfo.pageNum==pageInfo.pages}">disabled</c:if> ">
+                <a aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link" href="${pageContext.request.contextPath}/movielist.do?page=${pageInfo.pages}">&raquo;</a>
+            </li>
+    </ul></div>
 
 <script src="./assets/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -264,7 +287,7 @@
                         票价：
                         <input type="text" class="form-control" id="price2" name="price">
                     </div>
-                    <button type="button"  onclick="openindex()" class="btn btn-block btn-default">上传图片</button>
+                        <button type="button"  onclick="openindex()" class="btn btn-block btn-default">上传图片</button>
                 </form>
             </div>
 
