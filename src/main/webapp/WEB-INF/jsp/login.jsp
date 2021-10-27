@@ -20,6 +20,8 @@
 
 </head>
 <body class="hold-transition login-page">
+
+
 <div class="login-box">
   <div class="login-logo">
     <a href="#"><b>电影在线订票</b></a>
@@ -31,7 +33,7 @@
   <!-- 表单提交 -->
       <form action="${pageContext.request.contextPath}/login.do">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" name="uname" placeholder="用户名">
+          <input type="text" class="form-control" name="uname" id="uname" placeholder="用户名">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fa fa-user-circle"></span>
@@ -39,7 +41,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" name="passwd" placeholder="密码">
+          <input type="password" class="form-control" name="passwd" id="passwd" placeholder="密码">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -49,8 +51,8 @@
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
+              <input type="checkbox" id="rememberMe" name="rememberMe" onclick="remember()">
+              <label for="rememberMe">
               	 记住密码
               </label>
             </div>
@@ -84,4 +86,45 @@
 <script src="./assets/dist/js/adminlte.min.js"></script>
 
 </body>
+<script type="text/javascript">
+  $(function(){
+    //cookie数据保存格式是key=value;key=value;形式，loginInfo为保存在cookie中的key值
+    var str = getCookie("loginInfo");
+    str = str.substring(0,str.length);
+    var username = str.split("+")[0];
+    var password = str.split("+")[1];
+    //自动填充用户名和密码
+    $("#uname").val(username);
+    $("#passwd").val(password);
+  })
+
+  function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0)==' ') c = c.substring(1);
+      if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+    }
+    return "";
+  }
+  //选中记住密码触发事件，如果选中就赋值为1 ，否则赋值为0
+  function remember(){
+    var remFlag = $("input:checkbox").is(':checked');
+    if(remFlag){
+      //cookie存用户名和密码,回显的是真实的用户名和密码,存在安全问题.
+      var conFlag = confirm("记录密码功能不宜在公共场所使用,以防密码泄露.您确定要使用此功能吗?");
+      if(conFlag){
+        //确认标志
+        $("#rememberMe").val("1");
+      }else{
+        $("input:checkbox").removeAttr('checked');
+        $("#rememberMe").val("0");
+      }
+    }else{
+      //如果没选中设置remFlag为""
+      $("#rememberMe").val("0");
+    }
+  }
+</script>
 </html>
