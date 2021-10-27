@@ -2,7 +2,7 @@ package controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,15 +27,53 @@ public class UserController {
 	}
 	
 	@RequestMapping("login.do")
-	public String login(User user,Model model) {
+	public String login(User user, Model model, HttpServletRequest rest, HttpServletResponse resp) {
 		//登录
 		int role = UserService.byNameps(user);
+		String[] checkboxMe = rest.getParameterValues("rememberMe");
+		String loginInfo = user.getUname() + "+" + user.getPasswd();
 		if(role==0) {
 //			model.addAttribute("message", "添加成功");
 			model.addAttribute("byadmin", user);
+			if(checkboxMe==null){
+				Cookie newCookie = new Cookie("loginInfo", null);
+				newCookie.setMaxAge(0);
+				newCookie.setPath("/");
+				resp.addCookie(newCookie);
+			}else {
+				if ("1".equals(checkboxMe[0])) {
+					Cookie userCookie = new Cookie("loginInfo", loginInfo);
+					userCookie.setMaxAge(1 * 24 * 60 * 60); // 存活期为一天 1*24*60*60
+					userCookie.setPath("/");
+					resp.addCookie(userCookie);
+				} else {
+					Cookie newCookie = new Cookie("loginInfo", null);
+					newCookie.setMaxAge(0);
+					newCookie.setPath("/");
+					resp.addCookie(newCookie);
+				}
+			}
 			return "starter";
 		}else if(role==1||role==2){
 			model.addAttribute("byuser", user);
+			if(checkboxMe==null){
+				Cookie newCookie = new Cookie("loginInfo", null);
+				newCookie.setMaxAge(0);
+				newCookie.setPath("/");
+				resp.addCookie(newCookie);
+			}else {
+				if ("1".equals(checkboxMe[0])) {
+					Cookie userCookie = new Cookie("loginInfo", loginInfo);
+					userCookie.setMaxAge(1 * 24 * 60 * 60); // 存活期为一天 1*24*60*60
+					userCookie.setPath("/");
+					resp.addCookie(userCookie);
+				} else {
+					Cookie newCookie = new Cookie("loginInfo", null);
+					newCookie.setMaxAge(0);
+					newCookie.setPath("/");
+					resp.addCookie(newCookie);
+				}
+			}
 			return "userStarter";
 		}else {
 			return "login";
@@ -75,9 +113,15 @@ public class UserController {
 	public String toUser() {
 		return "login";
 	}
+	//注册
 	@RequestMapping("toRegister.do")
 	public String toRegister() {
 		return "register";
+	}
+	//忘记密码
+	@RequestMapping("toForgot.do")
+	public String toForgot() {
+		return "forgot-password";
 	}
 	//详细电影页面
 	@RequestMapping("bymovie.do")
